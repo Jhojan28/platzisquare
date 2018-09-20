@@ -1,0 +1,21 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/lugares">Lugares</a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Contacto</li>
+  </ol>
+</nav>
+<div class="container">
+      <label for="nombre">Nombre</label>
+      <input type="text" name="nombre" id="nombre" class="form-control">
+      <br/>
+      <label for="email">Correo</label>
+      <input type="email" name="email" id="email" class="form-control">
+      <br/>
+      <label for="mensaje">Mensaje</label>
+      <textarea name="mensaje" id="mensaje" cols="30" rows="10" class="form-control"></textarea>
+      <hr />
+      <a class="btn btn-primary">Enviar</a>
+      <a class="btn btn-secondary" routerLink="/lugares">Cancelar</a>
+</div>

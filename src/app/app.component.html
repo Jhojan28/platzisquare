@@ -1,18 +1,17 @@
-<agm-map [latitude]="lat" [longitude]="lng">
-	<agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
-</agm-map>
-<ul>
-	<ng-container *ngFor="let lugar of lugares">
-		<li *ngIf="lugar.active" > {{ lugar.nombre }} </li>
-	</ng-container>
-</ul>
-<ul>
-	<ng-container *ngFor="let lugar of lugares; let i = index" [ngSwitch]="lugar.cercania">
-		<li contar-clicks [ngStyle]="{color: (lugar.active) ? 'black' : 'grey'}" [ngClass]="{numero_par: (i+1)%2 !== 0}" [resaltar]="lugar.plan"> 
-			{{ lugar.nombre }} - 
-			<span *ngSwitchCase="1" [ngStyle]="{color: 'green'}">Muy cercano</span>
-			<span *ngSwitchCase="2" [ngStyle]="{color: 'black'}">Cercano</span>
-			<span *ngSwitchCase="3" [ngStyle]="{color: 'red'}">Lejano</span>
-		</li>
-	</ng-container>
-</ul>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+				<a class="nav-link" href="#">PlatziSquare <span class="sr-only">(current)</span></a>
+			</li>
+			<li class="nav-item" routerLinkActive="active">
+				<a class="nav-link" routerLink="/lugares">Inicio</a>
+			</li>
+			<li class="nav-item" routerLinkActive="active">
+				<a class="nav-link" routerLink="/contacto">Contacto</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+<router-outlet></router-outlet>
