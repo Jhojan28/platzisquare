@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Http } from '@angular/http';
 
 @Injectable()
 export class LugaresService{
@@ -12,10 +13,14 @@ export class LugaresService{
         { nombre: "Zapatería el Clavo", active: true, cercania: 3, distancia: 120, plan:'gratuito', id: 6 }
     ]
 
-    constructor(private afDB:AngularFirestore) {}
+    constructor(private afDB:AngularFirestore, private http:Http) {}
 
     public getLugares() {
-        return this.afDB.collection('lugares').valueChanges()
+        return this.afDB.collection('lugares').snapshotChanges()
+    }
+
+    public getLugar(id) {
+        return this.afDB.collection('lugares').doc(id).snapshotChanges()
     }
 
     public buscarLugar(id) {
@@ -24,5 +29,13 @@ export class LugaresService{
 
     public guardarLugar(lugar) {
         this.afDB.collection('lugares').add(lugar)
-	}
+    }
+
+    public editarLugar(id, lugar) {
+        this.afDB.collection('lugares').doc(id).set(lugar)
+    }
+    
+    public obtenerGeoData(direccion) {
+        return this.http.get(`http://maps.google.com/maps/api/geocode/json?key=AIzaSyB2Ks7mT6okXS4NKBhIpgJihs1bEXFQ4CU&address=${direccion}`)
+    }
 }

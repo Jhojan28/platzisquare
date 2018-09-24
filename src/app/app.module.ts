@@ -17,13 +17,14 @@ import { ContactoComponent } from './contacto/contacto.component';
 import { LugaresService } from './services/lugares.service';
 import { environment } from '../environments/environment';
 import { CrearComponent } from './crear/crear.component';
+import { HttpModule } from '@angular/http';
 
 const appRoutes:Routes = [
   { path: '', component: LugaresComponent },
   { path: 'lugares', component: LugaresComponent },
   { path: 'detalle/:id', component: DetalleComponent },
   { path: 'contacto', component: ContactoComponent },
-  { path: 'crear', component: CrearComponent }
+  { path: 'crear/:id', component: CrearComponent }
 ]
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ const appRoutes:Routes = [
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireStorageModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    HttpModule
   ],
   providers: [LugaresService],
   bootstrap: [AppComponent]

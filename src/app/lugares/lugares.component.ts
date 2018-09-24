@@ -10,9 +10,12 @@ export class LugaresComponent {
 	lng:number = -75.387097
 	lugares = null
 	constructor(private lugaresService:LugaresService) {
-		lugaresService.getLugares()
-			.subscribe(lugares=>{
-				this.lugares = lugares
-			})
+		lugaresService.getLugares().subscribe(lugares=>{
+			this.lugares = lugares.map(actions => {	
+				const data = actions.payload.doc.data();
+				const id = actions.payload.doc.id;
+				return { id, ...data }
+			});
+		})
 	}
 }
