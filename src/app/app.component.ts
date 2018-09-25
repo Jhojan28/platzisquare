@@ -1,4 +1,7 @@
 import { Component } from '@angular/core'
+import { AuthService } from './services/auth.service';
+import { Observable } from 'rxjs'
+import 'rxjs/Rx'
 
 @Component({
   selector: 'app-root',
@@ -6,18 +9,24 @@ import { Component } from '@angular/core'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'platzisquare'
-  lugares:any = [
-    { nombre: "Floreria la Gardenia", active: true, cercania: 1, distancia: 1, plan:'pagado' },
-    { nombre: "Donas la pasadita", active: true, cercania: 1, distancia: 1.8, plan:'gratuito' },
-    { nombre: "Veterinaria Huellitas felices", active: true, cercania: 2, distancia: 5, plan:'gratuito' },
-    { nombre: "Sushi Sushiroll", active: false, cercania: 3, distancia: 10, plan:'gratuito' },
-    { nombre: "Hotel la García", active: true, cercania: 3, distancia: 35, plan:'pagado' },
-    { nombre: "Zapatería el Clavo", active: true, cercania: 3, distancia: 120, plan:'gratuito' }
-  ]
+  loggedIn = false
+  loggedUser:any = null
+  constructor(private authService: AuthService) {
+    this.authService.isLoged().subscribe(result=>{
+      if(result && result.uid) {
+        this.loggedIn = true
+        setTimeout(()=>{
+          this.loggedUser = this.authService.getUser().currentUser.email
+        }, 500)
+      }else {
+        this.loggedIn = false
+      }
+    }, error=> {
+      this.loggedIn = false
+    })
+  }
 
-  lat:number = 6.1479711;
-  lng:number = -75.387097;
-
-  constructor() {}
+  logout() {
+    this.authService.logout()
+  }
 }

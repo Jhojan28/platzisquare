@@ -6,3 +6,14 @@ agm-map {
 .numero_par {
     background-color: aliceblue;
 }
+
+#cuadrado {
+    width: 200px;
+    height: 200px;
+    background-color: red;
+}
+
+.padding {
+    padding: 10px;
+    margin-bottom: 10px;
+}

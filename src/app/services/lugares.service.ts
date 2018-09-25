@@ -19,13 +19,18 @@ export class LugaresService{
     constructor(private afDB:AngularFirestore, private http:Http, private afAuth: AngularFireAuth) {}
 
     public getLugares() {
-        //return this.afDB.collection('lugares').snapshotChanges()
-        const headers = new Headers({ "Content-Type": "application/json" })
-        return this.http.get(`${environment.API_ENDPOINT}/.js`).pipe(map(response=>response.json().lugares))
+        return this.afDB.collection('lugares').snapshotChanges()
+        /*const headers = new Headers({ "Content-Type": "application/json" })
+        return this.http.get(`${environment.API_ENDPOINT}/.json`).pipe(map(response=>response.json().lugares))*/
     }
 
     public getLugar(id) {
         return this.afDB.collection('lugares').doc(id).snapshotChanges()
+        /*return this.http.get(environment.API_ENDPOINT + '/.json').
+        pipe(map(resultado => {
+            const data = resultado.json().lugares;
+            return data;
+        }));*/
     }
 
     public buscarLugar(id) {
@@ -33,10 +38,10 @@ export class LugaresService{
     }
 
     public guardarLugar(lugar) {
-        //this.afDB.collection('lugares').add(lugar)
-        console.log(this.afAuth.auth.currentUser)
+        this.afDB.collection('lugares').add(lugar)
+        /*console.log(this.afAuth.auth.currentUser)
         const headers = new Headers({ "Content-Type": "application/json" })
-        return this.http.post(`${environment.API_ENDPOINT}/lugares.json`, lugar, { headers }).subscribe()
+        return this.http.post(`${environment.API_ENDPOINT}/lugares.json`, lugar, { headers }).subscribe()*/
     }
 
     public editarLugar(id, lugar) {

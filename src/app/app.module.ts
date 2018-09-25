@@ -18,13 +18,21 @@ import { LugaresService } from './services/lugares.service';
 import { environment } from '../environments/environment';
 import { CrearComponent } from './crear/crear.component';
 import { HttpModule } from '@angular/http';
+import { LinkifystrPipe } from './pipes/linkifystr.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LoginComponent } from './login/login.component';
+import { RegistroComponent } from './registro/registro.component';
+import { AuthService } from './services/auth.service';
+import { GuardService } from './services/guard.service';
 
 const appRoutes:Routes = [
   { path: '', component: LugaresComponent },
   { path: 'lugares', component: LugaresComponent },
   { path: 'detalle/:id', component: DetalleComponent },
   { path: 'contacto', component: ContactoComponent },
-  { path: 'crear/:id', component: CrearComponent }
+  { path: 'crear/:id', component: CrearComponent, canActivate:[GuardService] },
+  { path: 'login', component: LoginComponent },
+  { path: 'registro', component: RegistroComponent }
 ]
 @NgModule({
   declarations: [
@@ -34,7 +42,10 @@ const appRoutes:Routes = [
     DetalleComponent,
     LugaresComponent,
     ContactoComponent,
-    CrearComponent
+    CrearComponent,
+    LinkifystrPipe,
+    LoginComponent,
+    RegistroComponent
   ],
   imports: [
     BrowserModule,
@@ -47,9 +58,11 @@ const appRoutes:Routes = [
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
-    HttpModule
+    HttpModule,
+    BrowserModule,
+    BrowserAnimationsModule
   ],
-  providers: [LugaresService],
+  providers: [LugaresService, AuthService, GuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
