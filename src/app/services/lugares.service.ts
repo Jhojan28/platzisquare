@@ -1,6 +1,9 @@
 import { Injectable } from "@angular/core";
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
+import { environment } from '../../environments/environment'
+import { AngularFireAuth } from "@angular/fire/auth";
+import { map } from 'rxjs/operators'
 
 @Injectable()
 export class LugaresService{
@@ -13,10 +16,12 @@ export class LugaresService{
         { nombre: "Zapatería el Clavo", active: true, cercania: 3, distancia: 120, plan:'gratuito', id: 6 }
     ]
 
-    constructor(private afDB:AngularFirestore, private http:Http) {}
+    constructor(private afDB:AngularFirestore, private http:Http, private afAuth: AngularFireAuth) {}
 
     public getLugares() {
-        return this.afDB.collection('lugares').snapshotChanges()
+        //return this.afDB.collection('lugares').snapshotChanges()
+        const headers = new Headers({ "Content-Type": "application/json" })
+        return this.http.get(`${environment.API_ENDPOINT}/.js`).pipe(map(response=>response.json().lugares))
     }
 
     public getLugar(id) {
@@ -28,7 +33,10 @@ export class LugaresService{
     }
 
     public guardarLugar(lugar) {
-        this.afDB.collection('lugares').add(lugar)
+        //this.afDB.collection('lugares').add(lugar)
+        console.log(this.afAuth.auth.currentUser)
+        const headers = new Headers({ "Content-Type": "application/json" })
+        return this.http.post(`${environment.API_ENDPOINT}/lugares.json`, lugar, { headers }).subscribe()
     }
 
     public editarLugar(id, lugar) {
@@ -36,6 +44,6 @@ export class LugaresService{
     }
     
     public obtenerGeoData(direccion) {
-        return this.http.get(`http://maps.google.com/maps/api/geocode/json?key=AIzaSyB2Ks7mT6okXS4NKBhIpgJihs1bEXFQ4CU&address=${direccion}`)
+        return this.http.get(`https://maps.google.com/maps/api/geocode/json?address=${direccion}&auth=AIzaSyB2Ks7mT6okXS4NKBhIpgJihs1bEXFQ4CU`)
     }
 }

@@ -1,5 +1,8 @@
+<div class="alert alert-danger" role="alert" *ngIf="error">
+    Tenemos algo de dificultades, disculpe las molestias. Error: {{ error.statusText }}
+</div>
 <agm-map [latitude]="lat" [longitude]="lng">
-    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+    <agm-marker *ngFor="let lugar of lugares" [latitude]="lugar.lat" [longitude]="lugar.lng"></agm-marker>
 </agm-map>
 <div class="container">
     <div class="row">

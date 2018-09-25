@@ -11,7 +11,8 @@ export const environment = {
     projectId: "chatbotproob-52f19",
     storageBucket: "chatbotproob-52f19.appspot.com",
     messagingSenderId: "3462957940"
-  }
+  },
+  API_ENDPOINT: "https://chatbotproob-52f19.firebaseio.com"
 };
 
 
