@@ -1,6 +1,10 @@
 import { Component } from '@angular/core'
 import { LugaresService } from '../services/lugares.service';
 import { ActivatedRoute } from '@angular/router';
+import { FormControl } from '@angular/forms'
+import { Http } from '@angular/http';
+import { Observable } from 'rxjs'
+import { switchMap, map, debounceTime } from 'rxjs/operators';
 
 @Component({
   	selector: 'app-crear',
@@ -10,7 +14,9 @@ export class CrearComponent {
 	lugar:any = {}
 	error = null
 	id:any = null
-	constructor(private lugaresService:LugaresService, private route: ActivatedRoute) {
+	results$: Observable<any>
+	private searchField: FormControl
+	constructor(private lugaresService:LugaresService, private route: ActivatedRoute, private http: Http) {
 		this.id = this.route.snapshot.params['id']
 		if(this.id != 'new'){
 			this.lugaresService.getLugar(this.id).subscribe(lugar=>{
@@ -33,6 +39,9 @@ export class CrearComponent {
 				this.error = "Lo sentimos hubo una excepción, excepción: " + error.errorText;
 			  });*/
 		}
+		const url = "https://maps.google.com/maps/api/geocode/json"
+		this.searchField = new FormControl()
+		this.results$ = this.searchField.valueChanges.pipe(debounceTime(500)).pipe(switchMap(query=>this.http.get(`${url}?address=${query}`))).pipe(map(response=> response.json())).pipe(map(response=>response.results))
 	}
 
 	guardarLugar() {

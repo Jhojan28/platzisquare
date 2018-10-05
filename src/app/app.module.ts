@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 
 import { AppComponent } from './app.component'
-import { FormsModule } from '@angular/forms'
+import { FormsModule,ReactiveFormsModule } from '@angular/forms'
 import { AgmCoreModule } from '@agm/core';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -60,7 +60,8 @@ const appRoutes:Routes = [
     AngularFireAuthModule,
     HttpModule,
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
   providers: [LugaresService, AuthService, GuardService],
   bootstrap: [AppComponent]
